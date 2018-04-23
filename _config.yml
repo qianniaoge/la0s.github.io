@@ -5,11 +5,11 @@
 
 # Site
 title: La0s
-subtitle:
-description:
+subtitle:Next
+description:我曾在你身边短暂的停留。
 author: La0s
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
-language: en
+language: zh-Hans
 date_format: '%Y-%m-%d'
 
 # URL
