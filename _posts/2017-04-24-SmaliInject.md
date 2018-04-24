@@ -14,7 +14,7 @@ tags: Android Reverse
 
 于是采用了smali注入的方法，使用方法：
 
-下载附件smali注入
+下载附件smali注入https://pan.baidu.com/s/16B_AlaN8luY246S_bQnuwg
 
 其中包括了InjectLog.smali注入文件和Inject.py注入脚本
 
@@ -23,6 +23,8 @@ tags: Android Reverse
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20180424.1.png)
 
 反编译后的目录：
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20180424.9.png)
 
 将Inject.py放入要注入的smali文件目录，会自动给当前目录和子集目录smali文件进行注入
 
@@ -44,7 +46,7 @@ Inject.py：
 
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20180424.5.png)
 
-重新打包 java -jar apktool_2.2.3.jar b out -o unsigned.apk，然后签名即可：
+重新打包 java -jar apktool_2.2.3.jar b out -o unsigned.apk，然后使用ApkToolkit工具进行签名即可：
 
 用Jeb打开patch过的apk,所有的函数都已经被注入了代码:
 
@@ -52,7 +54,7 @@ Inject.py：
 
 打开SDK工具下的ddms,在手机运行应用，过滤Tag为InjectLog：
 
-![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20180424.7.png)
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20180424.8.png)
 
 打印日志输出的顺序就是smali文件（APK应用）的执行顺序！
 
