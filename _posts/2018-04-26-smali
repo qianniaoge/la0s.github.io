@@ -1,0 +1,59 @@
+---
+layout: post
+title: 使用Android studio进行smali动态调试
+key: 20150103
+tags: Android Reverse
+---
+针对某投资APP的协议逆向过程
+
+抓包
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/1.png)
+
+搜索mxdy和diyou
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/2.png)
+
+diyou为AES加密
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/3.png)
+
+断在p2sDiyou和p2sXmdy这两处函数
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/4.png)
+
+先看第一个
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/5.png)
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/6.png)
+
+服务器使用SEND_AES_KEY=;3jm$>/p-ED^cVz_j~.KV&V)k9jn,UAH来加密发送数据，密钥为32位，所以是AES-ECB-256加密
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/7.png)
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/8.png)
+
+同理RECEIVE_AES_KEY=54Ms5bkE6UEdyrRviJ0![OR]g+i79x]k用来解密服务器请求数据
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/9.png)
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/10.png)
+
+再来看签名的p2sXmdy函数
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/11.png)
+
+md5的参数为
+DY34fdgsWET@#$%wg#@4fgd345sgftVI96ANm9m42duSFpTp2jwnMAsUpCk7Y2nn61gpleb+g61ZpsGM2lw7h8OTQUFd DY34fdgsWET@#$%wg#@4fgd345sg
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/12.png)
+
+综上
+
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/13.png)
+
+
+
+
+
