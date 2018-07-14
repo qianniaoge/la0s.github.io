@@ -6,7 +6,7 @@
 # Site
 title: La0s
 subtitle:
-description: 我曾在你身边短暂的停留。
+description: https://weibo.com/La0s
 author: La0s
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
 language: zh-Hans
@@ -548,7 +548,7 @@ calendar:
 
 # Algolia Search
 algolia_search:
-  enable: false
+  enable: true
   hits:
     per_page: 10
   labels:
