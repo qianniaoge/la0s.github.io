@@ -412,8 +412,8 @@ gitalk:
   clientID: 8e48c78ba4be14211d30
   clientSecret: d31ebc66de799fb0fd1608e5746f77d937f5632a
   repo: la0s.github.io/
-  owner: la0s
-  admin: la0s
+  owner: La0s
+  admin: La0s
 
 # Baidu Share
 # Available value:
