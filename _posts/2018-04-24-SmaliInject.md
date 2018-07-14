@@ -4,7 +4,7 @@ title: smali全局注入探测App流程
 key: 20150103
 tags: Android Reverse
 ---
-工具转自[链接](http://blog.csdn.net/charlessimonyi/article/details/52027563)
+工具转自 [链接](http://blog.csdn.net/charlessimonyi/article/details/52027563)
 
 我个人觉得逆向主要分为两个部分，分析流程追踪关键代码与算法分析编写脚本，这可能也是实际项目和CTF竞赛的区别：前者是因为功能与流程的复杂程度，后者则是将算法进行无限放大。
 
@@ -14,7 +14,7 @@ tags: Android Reverse
 
 于是采用了smali注入的方法，使用方法：
 
-下载附件smali注入[链接](https://pan.baidu.com/s/16B_AlaN8luY246S_bQnuwg)
+下载附件smali注入 [链接](https://pan.baidu.com/s/16B_AlaN8luY246S_bQnuwg)
 
 其中包括了InjectLog.smali注入文件和Inject.py注入脚本
 
