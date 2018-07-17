@@ -25,9 +25,9 @@ Inspeckage是一个用来动态分析安卓app的xposed模块。Inspeckage对动
 
 下面再来看比较关键的的自定义hooks功能  
 在这个功能里，Inspeckage不提供重载，所以当我们需要分析的函数有多个重名的方法时是没有办法的，在这篇文章里[Android应用逆向工程](https://www.anquanke.com/post/id/86884)，作者是把这个方法单独重命名重打包来分析的
-而且在加壳APP中由于Inspeckage只能hook Java自身的类和方法，所以是无法做到frida和xposed模板hook应用本身加固的方法的，所以这个功能实际上比较有限
+而且在加壳APP中由于Inspeckage只能hook Java自身的类和方法，所以是无法做到frida和xposed模板hook应用本身加固的方法的，所以这个功能实际上比较有限。
 
 ![Desktop Preview](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20180717.4.png)
 
-前面我们使用frida或者是xposed来获得APP的key，iv，Instance等，都是通过hook Cipher类的相关构造和加解密方法比如SecretKeySpec，IvParameterSpec，doFinal函数等等，只不过Inspeckage在它的initAllHooks给我们集成化了这些东西，其他的文件监控和HTTP请求也是类似的原理，所以Inspeckage这个工具非常方便，但我们应该先通过，xposed或者其他的框架了解原理，再来用这个东西集中化测试，不然这个工具简化了大量的操作会让我们很容易陷入只了解工具而不知道原理的尴尬局面。  
+前面我们使用frida或者是xposed来获得APP的key，iv，Instance等，都是通过hook Cipher类的相关构造和加解密方法比如SecretKeySpec，IvParameterSpec，doFinal函数等等，只不过Inspeckage在它的initAllHooks给我们集成化了这些东西，其他的文件监控和HTTP请求也是类似的原理，所以Inspeckage这个工具非常方便，但我们应该先通过frida，xposed或者其他的框架了解原理，再来用这个东西集中化测试，不然这个工具简化了大量的操作会让我们很容易陷入只了解工具而不知道原理的尴尬局面。  
 附Inspeckage原理介绍[Xposed知多少？](http://www.freebuf.com/column/147856.html)
