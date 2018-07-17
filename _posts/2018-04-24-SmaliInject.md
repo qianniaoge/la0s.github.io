@@ -22,8 +22,7 @@ tags: Android Reverse
 
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20180424.2.png)
 
-Inject.py：
-
+Inject.py：  
 这里需要python版本为3.3以上，因为会牵扯到脚本中某些函数的版本问题。  
 执行这个脚本：
 
