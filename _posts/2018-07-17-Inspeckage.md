@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 带你深入一款Android应用程序动态分析工具————Inspeckage
+title: 带你深入一款Android应用程序动态分析工具———Inspeckage
 key: 20150103
 tags: Android Reverse
 ---
@@ -29,5 +29,5 @@ Inspeckage是一个用来动态分析安卓app的xposed模块。Inspeckage对动
 
 ![Desktop Preview](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20180717.4.png)
 
-前面我们使用frida或者是xposed来获得APP的key,iv,Instance等，都是通过hook Cipher类的相关构造和加解密方法比如SecretKeySpec，IvParameterSpec，doFinal函数等等，只不过Inspeckage在它的initAllHooks给我们集成化了这些东西，其他的文件监控和http请求也是类似的原理，所以Inspeckage这个工具非常方便，但我们应该先通过frida，xposed或者其他的框架了解原理，再来用这个东西集中化测试，不然这个工具简化了大量的操作会让我们很容易陷入只了解工具而不知道原理的尴尬局面  
+前面我们使用frida或者是xposed来获得APP的key，iv，Instance等，都是通过hook Cipher类的相关构造和加解密方法比如SecretKeySpec，IvParameterSpec，doFinal函数等等，只不过Inspeckage在它的initAllHooks给我们集成化了这些东西，其他的文件监控和HTTP请求也是类似的原理，所以Inspeckage这个工具非常方便，但我们应该先通过弗里达，xposed或者其他的框架了解原理，再来用这个东西集中化测试，不然这个工具简化了大量的操作会让我们很容易陷入只了解工具而不知道原理的尴尬局面。  
 附Inspeckage原理介绍[Xposed知多少？](http://www.freebuf.com/column/147856.html)
