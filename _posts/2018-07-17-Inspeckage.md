@@ -4,8 +4,8 @@ title: 带你深入安卓分析工具————Inspeckage
 key: 20150103
 tags: Android Reverse
 ---
-Inspeckage是一个用来动态分析安卓app的xposed模块。Inspeckage对动态分析很多常用的功能进行了汇总并且内建一个webserver。整个分析操作可以在友好的界面环境中进行
-安装和使用笔记[Inspeckage使用笔记](https://blog.csdn.net/tom__chen/article/details/78216732)
+Inspeckage是一个用来动态分析安卓app的xposed模块。Inspeckage对动态分析很多常用的功能进行了汇总并且内建一个webserver。整个分析操作可以在友好的界面环境中进行  
+安装和使用笔记[Inspeckage使用笔记](https://blog.csdn.net/tom__chen/article/details/78216732)  
 [安卓分析工具Inspeckage介绍](http://xdxd.love/2016/08/09/安卓分析辅助工具Inspeckage介绍/)
 
 ![Desktop Preview](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20180717.1.png)
