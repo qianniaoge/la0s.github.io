@@ -25,7 +25,7 @@ Inspeckage是一个用来动态分析安卓app的xposed模块。Inspeckage对动
 
 下面再来看比较关键的的自定义hooks功能  
 在这个功能里，Inspeckage不提供重载，所以当我们需要分析的函数有多个重名的方法时是没有办法的，在这篇文章里[Android应用逆向工程](https://www.anquanke.com/post/id/86884)，作者是把这个方法单独重命名重打包来分析的
-而且在加壳APP中由于Inspeckage只能hook Java自身的类和方法，所以是无法做到frida和xposed模板hook应用本身加固的方法的，所以这个功能实际上比较有限。
+而且在加壳APP中由于Inspeckage只能hook Java自身的类和方法，所以是无法做到像frida和xposed模板hook加固的方法的，所以这个功能实际上比较有限。
 
 ![Desktop Preview](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20180717.4.png)
 
