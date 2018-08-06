@@ -29,4 +29,4 @@ github（比如说搜索关键词xposed然后按star排序就能收获很多牛�
 
 3.多动手多实践，这是提高技术的不二法门（看雪上的很多方法和工具我都亲自实践了一遍）。只看文章是不行的，必须是去验证这方法是否可以，过程中可能会碰到新的问题然后解决它，做到举一反三。比如我之前搞过的两个典型APP。我试过各种方法，总结其中的经验。
 
-![Desktop Preview](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20180806.5.png)
+![Desktop Preview](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20180806.6.png)
