@@ -6,10 +6,9 @@ tags: Android Reverse
 excerpt_separator: <!--more-->
 ---
 工具转自 [Android应用逆向——分析反编译代码之大神器](http://blog.csdn.net/charlessimonyi/article/details/52027563)  
-我个人觉得逆向主要分为两个部分，分析流程追踪关键代码与算法分析编写脚本，这可能也是实际项目和CTF竞赛的区别：前者是因为功能与流程的复杂程度，后者则是将算法进行无限放大。  
-在静态分析无法解决问题之后，评测了一下非虫大大书中几种动态分析之后。栈跟踪法基本和采用AndroidStudio查看调用栈是一致的，基本只能分析局部函数的调用。而且对methodfiling方法也进行了评测，输出简直惨不忍睹，还充斥了大量的系统函数。虽然可以过滤。。  
-于是采用了smali注入的方法，使用方法：  
-下载附件smali注入 [链接](https://pan.baidu.com/s/16B_AlaN8luY246S_bQnuwg)  
+我个人觉得逆向主要分为两个部分，分析流程追踪关键代码与算法分析编写脚本，这可能也是实际项目和CTF竞赛的区别：前者是因为功能与流程的复杂程度，后者则是将算法进行无限放大。在静态分析无法解决问题之后，评测了一下非虫大大书中几种动态分析之后。栈跟踪法基本和采用AndroidStudio查看调用栈是一致的，基本只能分析局部函数的调用。而且对methodfiling方法也进行了评测，输出简直惨不忍睹，还充斥了大量的系统函数。虽然可以过滤...于是采用了smali注入的方法，
+使用方法:  
+附件smali注入 [链接](https://pan.baidu.com/s/16B_AlaN8luY246S_bQnuwg)  
 其中包括了InjectLog.smali注入文件和Inject.py注入脚本  
 将要分析的apk解包  java -jar apktool_2.3.2.jar d myapp.apk -o out（最新版apktool）
 <!--more-->
