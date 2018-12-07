@@ -6,9 +6,7 @@ tags: Android Reverse
 excerpt_separator: <!--more-->
 ---
 毕业第一步，先把项目需求实现了。其实这篇文章和之前Android上frida破解加密数据思路是一致的，因为iOS作为一种闭源系统，没有Android那么多的packers和so库，
-iOS官方自己封装了自己统一的Crypto库：[CommonCryptor.h](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h)，
-[CommonDigest.h](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonDigest.h.auto.html)，
-[CommonHMAC.h](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonHMAC.h.auto.html)，
+iOS官方封装了自己统一的Crypto库：[CommonCryptor.h](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h)/[CommonDigest.h](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonDigest.h.auto.html)/[CommonHMAC.h](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonHMAC.h.auto.html)，
 所以我们hook起来也很方便
 <!--more-->
 拿我们之前搞过的一个投资APP为例，
