@@ -20,12 +20,16 @@ lldb和debugserver配置这里就不多说了，网上博客和两本iOS逆向�
 为此需要先打开APP，第二个终端端口转发iproxy 12345 1234，第三个终端输入lldb命令连接：process connect connect://localhost:12345  
 image list -o -f | grep MoneyPlatListedVersion 找到ASLR的基地址偏移，
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.5.png)
+
 然后断在br s -a 0x0000000000014000+0x00000001000EA360，c运行点击获取验证码触发断点
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.6.png)
+
 先看objc_msgSend的selector是base64EncodedString，接着看receiver：po $x0
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.7.png)
+
 接着ni单步执行此函数，查看返回值po $x0，返回了base64的数据
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.8.png)
+
 同理我们断在-[NSData aes256_encrypt:IV:]的关键函数CCCrypt
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.9.png)
 对比
@@ -45,6 +49,7 @@ CCCryptorStatus CCCrypt(
 ```
 我们分别打印出它的key，len，iv和dataIn的长度
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.10.png)
+
 然后使用memory read $x6 -count 748 -force打印dataIn数据
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.11.png)
 
