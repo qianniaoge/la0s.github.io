@@ -1,0 +1,56 @@
+---
+layout: post
+title: 使用lldb+debugserver动态调试iOS应用
+key: 20150103
+tags: iOS Reverse
+excerpt_separator: <!--more-->
+---
+本来又想来搞某个字母车的，结果那个iOS端有反sysctl调试，所以换了样本某个投资APP
+首先注册发送验证码抓包<!--more-->
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.1.png)
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.2.png)
+
+看到data是加密的，砸壳完直接将二进制文件拖进IDA，String搜索requestTime，找到调用的函数，
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.3.png)
+
+看到data关键字，分析一下流程大致判断是将json Base64之后AES加密，接下来直接断这两个关键地方
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.4.png)
+
+lldb和debugserver配置这里就不多说了，网上博客和两本iOS逆向书都有，第一个输入ssh root@172.18.173.71，直接attach上进程：debugserver *:1234 -a "MoneyPlatListedVersion"
+为此需要先打开APP，第二个终端端口转发iproxy 12345 1234，第三个终端输入lldb命令连接：process connect connect://localhost:12345  
+image list -o -f | grep MoneyPlatListedVersion 找到ASLR的基地址偏移，
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.5.png)
+然后断在br s -a 0x0000000000014000+0x00000001000EA360，c运行点击获取验证码触发断点
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.6.png)
+先看objc_msgSend的selector是base64EncodedString，接着看receiver：po $x0
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.7.png)
+接着ni单步执行此函数，查看返回值po $x0，返回了base64的数据
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.8.png)
+同理我们断在-[NSData aes256_encrypt:IV:]的关键函数CCCrypt
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.9.png)
+对比
+```objective-c
+CCCryptorStatus CCCrypt(
+    CCOperation op,         /* kCCEncrypt, etc. */
+    CCAlgorithm alg,        /* kCCAlgorithmAES128, etc. */
+    CCOptions options,      /* kCCOptionPKCS7Padding, etc. */
+    const void *key,
+    size_t keyLength,
+    const void *iv,         /* optional initialization vector */
+    const void *dataIn,     /* optional per op and alg */
+    size_t dataInLength,
+    void *dataOut,          /* data RETURNED here */
+    size_t dataOutAvailable,
+    size_t *dataOutMoved)
+```
+我们分别打印出它的key，len，iv和dataIn的长度
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.10.png)
+然后使用memory read $x6 -count 748 -force打印dataIn数据
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.11.png)
+
+综上lldb调试还是非常方便的，和hook相比不用在意那么多参数类型，但是缺点也是很明显，如果程序有反调试检测就得绕过了
+
+参考  
+[lldb使用方法(学习笔记)](https://bbs.pediy.com/thread-212731.htm)  
+[实战：干掉高德地图7.2.0版iOS客户端的反动态调试保护](http://www.iosre.com/t/7-2-0-ios/770)  
+[iOS逆向工程之Hopper+LLDB调试第三方App](https://www.cnblogs.com/ludashi/p/5730338.html)
