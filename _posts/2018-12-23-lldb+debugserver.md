@@ -20,7 +20,7 @@ lldb和debugserver配置这里就不多说了，网上博客和两本iOS逆向�
 第一个终端输入ssh root@172.18.173.71，直接attach上进程：debugserver *:1234 -a "MoneyPlatListedVersion"，为此需要先打开APP  
 第二个终端端口转发iproxy 12345 1234  
 第三个终端输入lldb命令连接：process connect connect://localhost:12345  
-image list -o -f | grep MoneyPlatListedVersion 找到ASLR的基地址偏移
+image list -o -f | grep MoneyPlatListedVersion 找到ASLR的基地址偏移（这里要注意调试的APP必须和IDA分析的是一致的，这样基地址才能对上,我之前因为换了iPhone6 plus的越狱机，而砸壳分析的文件还是老的5s脱出来的被坑了）
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181223.5.png)
 
 然后断在br s -a 0x0000000000014000+0x00000001000EA360，c运行点击获取验证码触发断点
