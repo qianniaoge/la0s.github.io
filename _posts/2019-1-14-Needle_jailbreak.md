@@ -5,8 +5,8 @@ key: 20150103
 tags: iOS Reverse
 excerpt_separator: <!--more-->
 ---
-这篇文章虽然叫这题目。但是不只是用到了这Needle一个工具，首先介绍一下Needle这个工具，和Android上的Drozer一样也是iOS安全测试框架，旨在简化对iOS应用程序进行安全评估的整个过程，Needle所涵盖的测试领域的一些示例包括：数据存储，进程间通信，网络通信，静态代码分析，挂钩和二进制保护。里面有很多集成了很多模块能方便的帮我们完成测试工作。好了介绍到这，今天主要是针对三款有越狱检测的iOS应用，难度由低到高<!--more-->
-这里主要用到了dynamic/detection/script_jailbreak-detection-bypass这个模块，关于模块的命令用法见Needle的wiki [Modules-Usage](https://github.com/mwrlabs/needle/wiki/Modules-Usage)，这里就不赘述了  
+这篇文章虽然叫这题目。但是不只是用到了这Needle一个工具，首先介绍一下Needle这个工具，和Android上的Drozer一样也是iOS安全测试框架，旨在简化对iOS应用程序进行安全评估的整个过程，Needle所涵盖的测试领域的一些示例包括：数据存储，进程间通信，网络通信，静态代码分析，挂钩和二进制保护。里面有很多集成了很多模块能方便的帮我们完成测试工作。<!--more-->  
+好了介绍到这，今天主要是针对三款有越狱检测的iOS应用，难度由低到高，这里主要用到了dynamic/detection/script_jailbreak-detection-bypass这个模块，关于模块的命令用法见Needle的wiki [Modules-Usage](https://github.com/mwrlabs/needle/wiki/Modules-Usage)，这里就不赘述了  
 首先针对第一个APP
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.1.png)
 
@@ -38,7 +38,7 @@ Mac上的IDA7.0搜不出来中文字符（其实在string段里是显示中文�
 所以参考objection的写法，重新改了本地的代码
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.10.png)
 
-成功绕过!!!
+成功绕过
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.11.png)
 
 最后不再借助这个框架，从Needle把代码拿出来自己手动写一个js
@@ -124,9 +124,8 @@ Interceptor.attach(f, {
             }
 });
 ```
+注入此脚本
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.12.png)
-
-成功绕过
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.13.png)
 
 最后再看一个APP，同样是Needle的模块无法绕过，而且这个越狱检测可以说是业界典范了
@@ -143,7 +142,7 @@ Interceptor.attach(f, {
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.18.png)
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.19.png)
 
-直接hook一下-[BMKSecurityManager jailBreak]就可以绕过了
+同样都是返回bool值，直接hook一下-[BMKSecurityManager jailBreak]就可以绕过了
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.20.png)
 
 在Functions并没有搜到这个方法，猜测是在framework实现了此方法，双击OBJC_CLASS___BMKSecurityManager
@@ -157,5 +156,6 @@ Interceptor.attach(f, {
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.24.png)
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.25.png)
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.26.png)
-感兴趣的同学自己研究一下吧。
+
+emmmm...感兴趣的同学自己研究一下吧。
 
