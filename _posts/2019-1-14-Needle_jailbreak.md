@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 ---
 这篇文章虽然叫这题目。但是不只是用到了这Needle一个工具，首先介绍一下Needle这个工具，和Android上的Drozer一样也是iOS安全测试框架，旨在简化对iOS应用程序进行安全评估的整个过程，Needle所涵盖的测试领域的一些示例包括：数据存储，进程间通信，网络通信，静态代码分析，挂钩和二进制保护。里面有很多集成了很多模块能方便的帮我们完成测试工作。<!--more-->  
 好了介绍到这，今天主要是针对三款有越狱检测的iOS应用，难度由低到高，这里主要用到了dynamic/detection/script_jailbreak-detection-bypass这个模块，关于模块的命令用法见Needle的wiki [Modules-Usage](https://github.com/mwrlabs/needle/wiki/Modules-Usage)，这里就不赘述了  
-首先针对第一个APP
+首先针对第一个APP（v5.1.2）
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.1.png)
 
 通过needle提供的模块script_jailbreak_detection_bypass
@@ -22,7 +22,7 @@ excerpt_separator: <!--more-->
 成功绕过
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.5.png)
 
-这个APP越狱检测函数恰好叫isJailbroken所以能被hook绕过，下面来看Needle无法绕过的两个APP
+这个APP越狱检测函数恰好叫isJailbroken所以能被hook绕过，下面来看Needle无法绕过的两个APP（v6.3.1）
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.6.png)
 
 Mac上的IDA7.0搜不出来中文字符（其实在string段里是显示中文的），原因是无法显示_ustring段的字符串，而Windows上是可以的。  
@@ -32,7 +32,7 @@ Mac上的IDA7.0搜不出来中文字符（其实在string段里是显示中文�
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.8.png)
 
 关键就在这个stat函数了：通过文件名filename获取文件信息，并保存在buf所指的结构体stat中，执行成功则返回0，失败返回-1。  
-虽然Needle有hook这个函数（不得不说Needle考虑的情形比objection和其他工具多多了），但是返回值这么写有问题的
+虽然Needle有hook这个函数（不得不说Needle考虑的情形比objection和其他工具多多了），但是返回值这么写是有问题的
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.9.png)
 
 所以参考objection的写法，重新改了本地的代码
@@ -41,7 +41,7 @@ Mac上的IDA7.0搜不出来中文字符（其实在string段里是显示中文�
 成功绕过
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.11.png)
 
-最后不再借助这个框架，从Needle把代码拿出来自己手动写一个js
+最后不再借助这个框架，把Needle的代码拿出来自己手动写一个js
 ```javascript
 var paths=[
         "/Applications/blackra1n.app",
@@ -124,11 +124,11 @@ Interceptor.attach(f, {
             }
 });
 ```
-注入此脚本
+spawn并注入
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.12.png)
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.13.png)
 
-最后再看一个APP，同样是Needle的模块无法绕过，而且这个越狱检测可以说是业界典范了
+最后再看一个APP（v2.1.5），同样是Needle的模块无法绕过，而且这个越狱检测可以说是业界典范了
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.14.png)
 
 在__cfstring段搜索不安全环境
