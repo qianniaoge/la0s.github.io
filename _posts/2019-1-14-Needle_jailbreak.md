@@ -41,6 +41,7 @@ Mac上的IDA7.0搜不出来中文字符（其实在string段里是显示中文�
 成功绕过
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190114.11.png)
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/X7BQDjLsCZQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 最后不再借助这个框架，把Needle的代码拿出来自己手动写一个js
 ```javascript
 var paths=[
