@@ -18,7 +18,8 @@ excerpt_separator: <!--more-->
 代码很明显了，一般来说ptrace反调试会写成如下的代码
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190307.4.png)
 
-所以问题来了，有两种思路，因为sub_100051640只用来做反调试，所以可以replace掉这个sub_100051640函数，先看这种方法，代码如下```javascript
+所以问题来了，有两种思路，因为sub_100051640只用来做反调试，所以可以replace掉这个sub_100051640函数，先看这种方法，代码如下
+```javascript
 var baseAddr = Module.findBaseAddress('XinHuaShe');
 subAddr = baseAddr.add(0x51640);
 console.log("subAddr is " + subAddr.toString(16));
