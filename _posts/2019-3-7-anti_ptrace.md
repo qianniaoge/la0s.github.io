@@ -18,8 +18,7 @@ excerpt_separator: <!--more-->
 代码很明显了，一般来说ptrace反调试会写成如下的代码
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190307.4.png)
 
-所以问题来了，有两种思路，因为sub_100051640只用来做反调试，所以可以replace掉这个sub_100051640函数，先看这种方法，代码如下
-```javascript
+所以问题来了，有两种思路，因为sub_100051640只用来做反调试，所以可以replace掉这个sub_100051640函数，先看这种方法，代码如下```javascript
 var baseAddr = Module.findBaseAddress('XinHuaShe');
 subAddr = baseAddr.add(0x51640);
 console.log("subAddr is " + subAddr.toString(16));
@@ -35,7 +34,7 @@ Interceptor.replace(subAddr, new NativeCallback(function (argc, argv) {
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190307.5.png)
 
 可以成功attach。  
-但是有时候调用ptrace的函数不一定只用来反调试，也有可能做了一些初始化的东西，就不能随随便便replace，否则程序会运行错误的。所以这里介绍另一种思路——直接replace掉ptrace函数，因为ptrace地址一般是由ptrace_ptr = dlsym(handle, "ptrace")返回的，所以首先要得到这个地址
+但是有时候调用ptrace的函数不一定只用来反调试，也有可能做了一些初始化的东西，就不能随随便便replace，否则程序会运行错误的。所以这里介绍另一种更通用的办法——直接replace掉ptrace函数，因为ptrace地址一般是由ptrace_ptr = dlsym(handle, "ptrace")返回的，所以首先要得到这个地址
 ```javascript
 var f = Module.findExportByName(null,"dlsym");
 Interceptor.attach(f, {
