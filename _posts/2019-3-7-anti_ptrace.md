@@ -65,13 +65,17 @@ Interceptor.replace(ptracePtr, new NativeCallback( function (argc, argv) {
 ```
 因为libsystem_kernel.dylib`__ptrace这个地址是固定的，所以硬编码即可，spawn并注入
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190307.6.png)
+之后正常调试
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190307.7.png)
 
 除了hook之外有没有办法在程序运行前把这些反调试的指令patch掉呢，对于sub_100051640函数，我们只需要在运行之前对函数开头patch两条汇编即可，相当于直接return 0了
-```armasm
+```javascript
 MOV X0, #0
 RET
 ```
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190307.8.png)
 
-利于lldb提供的接口是不是可以写成script呢，这样就不用再考虑每次image的偏移。之后正常调试
-![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190307.7.png)
+另外利用lldb提供的接口是不是可以写成script呢，这样就不用再考虑每次image的偏移，肯定也是可以的。
+
+参考：  
+[Bypassing iOS anti-debugging protections](https://sig-switzerland.ch/wp-content/uploads/2017/05/SIGS-TechCon2017_Kudelski-Bypassing_iOS_App.pdf)
