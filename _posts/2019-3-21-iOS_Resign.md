@@ -23,7 +23,7 @@ excerpt_separator: <!--more-->
 注意不要把IDA数据库文件打包进去...重新压缩成IPA文件，使用Cydia Impactor安装，但是一运行应用闪退了，这说明应用做了签名校验，一般来说iOS开发会用exit函数退出应用，直接找到_exit的调用者
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.5.png)
 
-一个很明显的OC函数[XYAppIdentifierManager appIdentifierWithOrganizationId:]，查看此函数
+一个很明显的OC函数[XYAppIdentifierManager appIdentifierWithOrganizationId:]，查看此函数, 总体的流程就是读取embedded.mobileprovision文件里的application-identifier字段，然后对比硬编码的identifier字符串
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.6.png)
 
 修改指向退出流程的跳转指令CBNZ -> CBZ，再重新打包应用就不会闪退了
