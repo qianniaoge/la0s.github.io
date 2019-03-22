@@ -15,7 +15,10 @@ excerpt_separator: <!--more-->
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.3.png)
 但是这种情况下会把自己的签名覆盖APP的BundleID，有可能会导致异常
 
-针对于这个APP的ptrace反调试，直接使用Keypatch插件Nop掉sub_10004FF4C函数即可，然后Edit -> Patch program -> Apply patches to input file替换掉二进制文件即可
+先看越狱检测，直接在-[UIDevice isJailbroken]开头处使用Keypatch插件patch两条汇编MOV X0, #0 && RET 即可。
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.8.png)
+
+然后针对于这个APP的ptrace反调试，直接Nop掉sub_10004FF4C函数即可，然后Edit -> Patch program -> Apply patches to input file替换掉二进制文件，注意不要把IDA数据库文件打包进去...
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.4.png)
 
 重新压缩成IPA文件，使用Cydia Impactor安装，但是一运行应用闪退了，这说明应用做了签名校验，一般来说iOS开发会用exit函数退出应用，直接找到_exit的调用者
