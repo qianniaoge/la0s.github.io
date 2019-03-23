@@ -5,7 +5,7 @@ key: 20150103
 tags: iOS Reverse
 excerpt_separator: <!--more-->
 ---
-还是上篇文章里那个有反调试的APP，我们这里来试一下静态patch的方法，也就是重打包的方法。一般来说iOS重打包有两种方法：**第一种方法：**直接使用Cydia Impactor使用开发者签名安装即可，这种情况下不会修改APP的BundleID（推荐）<!--more-->
+还是上篇文章里那个有反调试的APP（v6.0.5），我们这里来试一下静态patch的方法，也就是重打包的方法。一般来说iOS重打包有两种方法：**第一种方法：**直接使用Cydia Impactor使用开发者签名安装即可，这种情况下不会修改APP的BundleID（推荐）<!--more-->
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.1.png)
 
 **第二种方法：**先使用iOS App Signer手动签名
@@ -23,10 +23,8 @@ excerpt_separator: <!--more-->
 注意不要把IDA数据库文件打包进去...重新压缩成IPA文件，使用Cydia Impactor安装，但是一运行应用闪退了，这说明应用做了签名校验，一般来说iOS开发会用exit函数退出应用，直接找到_exit的调用者
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.5.png)
 
-一个很明显的OC函数[XYAppIdentifierManager appIdentifierWithOrganizationId:]，查看此函数, 总体的流程就是读取embedded.mobileprovision文件里的application-identifier字段，然后对比硬编码的identifier字符串
+一个很明显的OC函数[XYAppIdentifierManager appIdentifierWithOrganizationId:]，查看此函数, 总体的流程就是读取embedded.mobileprovision文件里的application-identifier字段，然后对比硬编码的identifier字符串，参考[iOS判断APP被第三方企业证书重新签名](https://www.jianshu.com/p/b1cf329e1ca8)
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.6.png)
 
 修改指向退出流程的跳转指令CBNZ -> CBZ，再重新打包应用就不会闪退了
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.7.png)
-
-
