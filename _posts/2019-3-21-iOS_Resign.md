@@ -20,9 +20,11 @@ excerpt_separator: <!--more-->
 然后针对于这个APP的ptrace反调试，直接Nop掉sub_10004FF4C函数即可，然后Edit -> Patch program -> Apply patches to input file替换掉二进制文件
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.4.png)
 
-注意不要把IDA数据库文件打包进去...重新压缩成IPA文件，使用Cydia Impactor安装，但是一运行应用闪退了，这说明应用做了签名校验，一般来说iOS开发会用exit函数退出应用，直接找到_exit的调用者
-![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.5.png)
+注意不要把IDA数据库文件打包进去...重新压缩成IPA文件，使用Cydia Impactor安装，但是一运行应用闪退了，这说明应用做了签名校验，一般来说iOS开发会用exit函数退出应用，先用restore-symbol把iOS的符号还原，替换文件重签名安装，然后以backboard后台的方式启动，设置断点b exit，bt打印堆栈，因为我们这里已经把符号还原了，所以签名验证的地方就是这个+[XYAppIdentifierManager appIdentifierWithOrganizationId:]函数
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.9.png)
 
+或者我们在IDA里直接找到_exit的调用者
+![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.5.png)
 一个很明显的OC函数[XYAppIdentifierManager appIdentifierWithOrganizationId:]，查看此函数, 总体的流程就是读取embedded.mobileprovision文件里的application-identifier字段，然后对比硬编码的identifier字符串，参考[iOS判断APP被第三方企业证书重新签名](https://www.jianshu.com/p/b1cf329e1ca8)
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190321.6.png)
 
