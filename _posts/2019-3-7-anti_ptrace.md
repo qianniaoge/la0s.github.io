@@ -31,7 +31,7 @@ Interceptor.replace(subAddr, new NativeCallback(function (argc, argv) {
     return 0;
 }, 'int', ['int', 'pointer']));
 ```
-代码中确认subAddr地址是不是跑起来的sub_100051640函数，使用frida spawn并注入
+代码中最好确认subAddr地址是不是内存中的sub_100051640函数，使用frida spawn并注入
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190307.5.png)
 
 可以成功attach。  
@@ -57,11 +57,17 @@ Interceptor.attach(f, {
 
 
 var ptracePtr = ptr("0x18bad1078"); //ptrace函数地址
-//var open = new NativeFunction(ptracePtr, 'int', ['int', 'int','int', 'int']);
-Interceptor.replace(ptracePtr, new NativeCallback( function (argc, argv) {
-    console.log("Hook ptrace Bypass!!!");
-    return 0;
-}, 'int', ['int', 'pointer']));
+var OriginPtrace = new NativeFunction(ptracePtr, 'void', ["pointer", "pointer", "pointer", "pointer"]);
+Interceptor.replace(ptracePtr, new NativeCallback(function(arg1, arg2, arg3, arg4) {
+    if (arg1 == 31) {
+        console.log("Hook ptrace Bypass!!!");
+        return 0;
+    } 
+    else {
+        OriginPtrace(arg1, arg2, arg3, arg4);
+
+    }
+},'int', ['int', 'pointer']));
 ```
 因为libsystem_kernel.dylib`__ptrace这个地址是固定的，所以硬编码即可，spawn并注入
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190307.6.png)
@@ -78,4 +84,5 @@ RET
 另外利用lldb提供的接口是不是可以写成script呢，这样就不用再考虑每次image的偏移，肯定也是可以的。
 
 参考：  
-[Bypassing iOS anti-debugging protections](https://sig-switzerland.ch/wp-content/uploads/2017/05/SIGS-TechCon2017_Kudelski-Bypassing_iOS_App.pdf)
+[Bypassing iOS anti-debugging protections](https://sig-switzerland.ch/wp-content/uploads/2017/05/SIGS-TechCon2017_Kudelski-Bypassing_iOS_App.pdf)  
+[Disabling SSL pinning by hooking SecTrustEvaluate(...)](https://kov4l3nko.github.io/blog/2018-05-27-sll-pinning-hook-sectrustevaluate/)
