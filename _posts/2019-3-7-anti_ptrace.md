@@ -5,11 +5,11 @@ key: 20150103
 tags: iOS Reverse
 excerpt_separator: <!--more-->
 ---
-在iOS平台上只要jailbreak了之后基本就可以想干啥干啥了，利用lldb+debugserver可以随便动态调试，所以最常用的保护手段就是反调试了，这里针对某新闻APP（v6.0.4）为例
+在iOS平台上只要jailbroken了之后基本就可以想干啥干啥了，利用lldb+debugserver可以随便动态调试，所以最常用的保护手段就是反调试了，这里针对某新闻APP（v6.0.4）为例
 当我们利用debugserver进行attach的时候，会报错Segmentation fault: 11<!--more-->
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190307.1.png)
 
-这种情况基本就是APP做了反调试了，参考[干掉高德地图iOS反动态调试保护](http://iosre.com/t/7-2-0-ios/770)，我们利用debugserver -x backboard *:1234 /var/containers/Bundle/Application/DE6EB372-0AE0-4E18-A9C6-367111443C00/XinHuaShe.app/XinHuaShe 启动APP，然后在lldb中下断b ptrace函数，然后使用bt打印堆栈
+这种情况基本就是APP做了反调试了，参考[干掉高德地图iOS反动态调试保护](http://iosre.com/t/7-2-0-ios/770)，我们利用debugserver -x backboard *:1234 /var/containers/.../XinHuaShe.app/XinHuaShe 启动APP，然后在lldb中下断b ptrace函数，然后使用bt打印堆栈
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20190307.2.png)
 
 将这里的地址转换一下就是0x0000000100000000+hex(333440)=0x100051680，在IDA中找到这个地址
@@ -65,7 +65,6 @@ Interceptor.replace(ptracePtr, new NativeCallback(function(arg1, arg2, arg3, arg
     } 
     else {
         OriginPtrace(arg1, arg2, arg3, arg4);
-
     }
 },'int', ['int', 'pointer']));
 ```
@@ -84,5 +83,5 @@ RET
 另外利用lldb提供的接口是不是可以写成script呢，这样就不用再考虑每次image的偏移，肯定也是可以的。
 
 参考：  
-[Bypassing iOS anti-debugging protections](https://sig-switzerland.ch/wp-content/uploads/2017/05/SIGS-TechCon2017_Kudelski-Bypassing_iOS_App.pdf)  
-[Disabling SSL pinning by hooking SecTrustEvaluate(...)](https://kov4l3nko.github.io/blog/2018-05-27-sll-pinning-hook-sectrustevaluate/)
+[Disabling SSL pinning by hooking SecTrustEvaluate(...)](https://kov4l3nko.github.io/blog/2018-05-27-sll-pinning-hook-sectrustevaluate/)  
+[Bypassing iOS anti-debugging protections](https://sig-switzerland.ch/wp-content/uploads/2017/05/SIGS-TechCon2017_Kudelski-Bypassing_iOS_App.pdf)
