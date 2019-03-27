@@ -37,7 +37,7 @@ Interceptor.replace(subAddr, new NativeCallback(function (argc, argv) {
 可以成功attach。  
 但是有时候调用ptrace的函数不一定只用来反调试，也有可能做了一些初始化的东西，就不能随随便便replace，否则程序会运行错误的。所以这里介绍另一种更通用的办法——直接replace掉ptrace函数，因为ptrace地址一般是由ptrace_ptr = dlsym(handle, "ptrace")返回的，所以首先要得到这个地址
 ```javascript
-var f = Module.findExportByName(null,"dlsym");
+var f = Module.findExportByName('dyld',"dlsym");
 Interceptor.attach(f, {
     onEnter: function (args) {
         this.is_common_path = false;
