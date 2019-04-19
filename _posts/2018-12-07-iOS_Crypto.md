@@ -96,7 +96,7 @@ Interceptor.attach(Module.findExportByName('libcommonCrypto.dylib', 'CCCrypt'), 
 直接使用 frida -U -f com.Dongfangjinke.dongfanghui -l CC_hook.js --no-pause
 ![](https://raw.githubusercontent.com/la0s/la0s.github.io/master/screenshots/20181207.4.png)
 
-operation: 0x0代表加密，0x1代表解密，CCAlgorithm: 0x0指加密方式是kCCAlgorithmAES128，具体参阅CommonCryptor.h各参数意义，key=DATA_KEY20150116和iv=20150116和Android客户端是一致的，而且由于Android是在so库生成的AES加密，避免了Android端java层hook不到的情况。
+operation: 0x0代表加密，0x1代表解密，CCAlgorithm: 0x0指加密方式是kCCAlgorithmAES128，CCOptions: 0x1指模式是cbc，具体参阅CommonCryptor.h各参数意义，key=DATA_KEY20150116和iv=20150116和Android客户端是一致的，而且由于Android是在so库生成的AES加密，避免了Android端java层hook不到的情况。
 
 参考  
 [appmon project提供的scripts](https://github.com/dpnishant/appmon/tree/master/scripts/iOS/Crypto)   
